@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "name": "default_pet",
+  "description": "Q版卡通萌系桌面宠物默认形象（基于用户参考照片生成）",
+  "frameWidth": 1024,
+  "frameHeight": 1024,
+  "anchor": { "x": 512, "y": 980 },
+  "defaultScale": 0.18,
+  "base": "pet_base.png",
+  "states": {
+    "idle":  { "label": "待机", "fps": 3,  "loop": true,  "frames": ["pet_idle.png", "pet_idle_1.png", "pet_idle_2.png"] },
+    "walk":  { "label": "行走", "fps": 10, "loop": true,  "frames": ["pet_walk.png", "pet_walk_1.png", "pet_walk_2.png"] },
+    "sleep": { "label": "睡觉", "fps": 1,  "loop": true,  "frames": ["pet_sleep.png", "pet_sleep_1.png", "pet_sleep_2.png"] },
+    "play":  { "label": "玩耍", "fps": 12, "loop": true,  "frames": ["pet_play.png", "pet_play_1.png", "pet_play_2.png"] }
+  },
+  "notes": [
+    "已完成多帧序列（每个状态 3 帧循环）：idle=呼吸+眨眼、walk=迈腿循环、sleep=呼吸起伏、play=蹦跳。宠物现已可动起来；后续可增至 4~6 帧进一步提升流畅度。",
+    "SpriteEngine 通过 frames 数组顺序播放；单帧时静态显示。",
+    "anchor 为站立锚点（底部中心），用于拖拽与渲染定位，避免飘移。",
+    "defaultScale 为默认显示缩放（1024px 源图 → 约 184px 显示尺寸）。"
+  ]
+}

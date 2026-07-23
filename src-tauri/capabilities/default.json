@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-pet/acl/manifest.json",
+  "identifier": "default",
+  "description": "Default capability for the always-on-top pet window. Grants core permissions so the frontend can invoke backend commands (custom commands are always allowed) and listen to backend-emitted events.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "core:window:default",
+    "core:webview:default",
+    "core:app:default",
+    "core:path:default"
+  ]
+}

@@ -1,0 +1,50 @@
+name: Build Desktop Pet (Windows)
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows Installer
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build Tauri app and publish release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          includeRelease: true
+          tagName: v__VERSION__
+          releaseName: "Desktop Pet v__VERSION__"
+          releaseBody: "Automated Windows build of the desktop pet."
+          releaseDraft: false
+          prerelease: false
+
+      - name: Upload artifacts (fallback download)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-pet-windows
+          path: |
+            src-tauri/target/release/bundle/msi/*.msi
+            src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: warn
