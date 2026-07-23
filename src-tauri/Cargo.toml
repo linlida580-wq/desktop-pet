@@ -10,22 +10,22 @@ rust-version = "1.70"
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-# Tauri v2 core. `tray-icon` enables the system tray, `image-png`/`icon-png`
-# let us load PNG icons from disk at runtime.
-tauri = { version = "2", features = ["tray-icon", "image-png", "icon-png"] }
+# Tauri v2 core. `tray-icon` enables the system tray, `image-png`
+# lets us load PNG icons from disk at runtime.
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
 tauri-utils = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 chrono = { version = "0.4", features = ["serde"] }
 raw-window-handle = "0.6"
+tokio = { version = "1", features = ["rt", "time", "macros", "sync"] }
 
-# NOTE: The architecture doc listed `windows@^0.52` and `tokio@^1`. We intentionally
-# do NOT depend on the `windows` crate directly. Tauri already pulls in a specific
-# `windows` (or `windows-sys`) version internally, and adding a second, possibly
-# mismatched major version would cause a hard compile failure. All Win32 calls
-# (window styles, WM_NCHITTEST subclass, GetCursorPos, registry) are made through
-# minimal raw `extern "system"` FFI declarations in `src/window` / `src/autostart`.
-# This keeps the dependency tree self-consistent and guarantees `cargo build` resolves.
+# NOTE: We intentionally do NOT depend on the `windows` crate directly.
+# Tauri already pulls in a specific `windows` (or `windows-sys`) version
+# internally, and adding a second, possibly mismatched major version would
+# cause a hard compile failure. All Win32 calls (window styles,
+# WM_NCHITTEST subclass, GetCursorPos, registry) are made through minimal
+# raw `extern "system"` FFI declarations in `src/window` / `src/autostart`.
 
 [features]
 # Default desktop-only build. Mobile targets are reserved for future iterations.

@@ -133,7 +133,7 @@ pub fn get_hwnd(window: &WebviewWindow) -> Result<isize, String> {
         .window_handle()
         .map_err(|e| e.to_string())?;
     match handle.as_raw() {
-        RawWindowHandle::Win32(w) => Ok(w.hwnd as isize),
+        RawWindowHandle::Win32(w) => Ok(w.hwnd.get()),
         _ => Err("not a Win32 window".to_string()),
     }
 }

@@ -3,8 +3,6 @@
 //! Naming follows `verb_noun` (architecture §7). Each command maps to a
 //! Tauri `invoke` call wrapped by `src/ipc/api.ts` on the frontend.
 
-use std::sync::Mutex;
-
 use serde::Serialize;
 use tauri::{AppHandle, Emitter, Manager, State};
 

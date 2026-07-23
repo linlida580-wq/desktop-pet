@@ -7,6 +7,7 @@
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use tauri::CommandArg;
 
 /// A 2D screen point in **physical (device) pixels**.
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
@@ -43,7 +44,7 @@ pub struct PetProfile {
 }
 
 /// A single reminder (R-06 / R-10).
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, CommandArg)]
 pub struct Reminder {
     pub id: String,
     /// Reminder category: "water" | "rest" | "eye" | "custom".
@@ -87,7 +88,7 @@ fn default_click_through() -> bool {
 }
 
 /// Top-level configuration root persisted to `config.json`.
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, CommandArg)]
 pub struct Config {
     #[serde(default = "default_version")]
     pub version: i32,

@@ -23,28 +23,35 @@ jobs:
 
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Install NSIS (needed for Windows installer)
+        run: choco install nsis --no-progress -y
 
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Build Tauri app and publish release
+      - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          projectPath: .
           includeRelease: true
-          tagName: v__VERSION__
-          releaseName: "Desktop Pet v__VERSION__"
-          releaseBody: "Automated Windows build of the desktop pet."
+          tagName: v0.1.0
+          releaseName: "Desktop Pet v0.1.0"
+          releaseBody: "Automated Windows build of the desktop pet application."
           releaseDraft: false
           prerelease: false
 
-      - name: Upload artifacts (fallback download)
+      - name: Upload artifacts fallback
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: desktop-pet-windows
           path: |
-            src-tauri/target/release/bundle/msi/*.msi
             src-tauri/target/release/bundle/nsis/*.exe
+            src-tauri/target/release/*.exe
           if-no-files-found: warn
+          retention-days: 30
